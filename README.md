@@ -62,13 +62,6 @@ pip install -r requirements.txt
 
 ### Gather and deploy resources with the CDK
 
-Before starting the deployment, please make the following changes.
-In `create_schedule` component of `app.py` file , modify:
-
-* the `customModelArn`, which can be retrieved from `Comprehend` -> `Custom classification` or `Custom entity recognition` -> `Model name` -> relevant `version` -> `ARN`
-* provide unique values for `modelType` (value to uniquely identify Custom classification or entity recognition model), `customEndpoint` (value to uniquely identify the endpoint), 
-
-Repeat the activity for `delete_schedule` component in `app.py`.
 
 Then synthesize the CDK environment, which executes the application, defines which resources will be created, and translates this into a CloudFormation template
 ```
@@ -97,8 +90,13 @@ Upon successful deployment of the stack, go to `EventBridge` and under the `Sche
 ![Diagram](src/Screenshot_1.png)
 
 
-Click on record for `CreateSchedule` and modify the cron expression under the `Schedule` section to the current time + 5 minutes in UTC. 
+Click on record for `CreateSchedule`. Edit the record to modify the cron expression under the `Schedule` section to the current time + 5 minutes in UTC. 
 ![Diagram](src/Screenshot_2.png)
+
+And modify the `payload` in `Target` section to add the ARN of the custom model. The `customModelArn` can be retrieved from `Comprehend` -> `Custom classification` or `Custom entity recognition` -> `Model name` -> relevant `version` -> `ARN`, the `modelType` is to  uniquely identify Custom classification or entity recognition model, `customEndpoint` to uniquely identify the endpoint).
+![Diagram](src/Screenshot_7.png)
+
+Repeat the activity for `DeleteSchedule` record.
 
 Upon reaching schedule UTC time, the Lambda function is triggered and go to `Comprehend` console to check the endpoint creation. 
 ![Diagram](src/Screenshot_3.png)
