@@ -1,6 +1,6 @@
 {
     "title": "EventBridge - Lambda - Comprehend",
-    "description": "Automate the deployment of endpoints for hosting Comprehend custom models using EventBridge, Lambda, DynamoDB, and Comprehend",
+    "description": "Automate the deployment and deletion of endpoints for hosting Comprehend custom models using EventBridge Scheduler, Lambda, DynamoDB, and Comprehend",
     "language": "Python",
     "level": "200",
     "framework": "CDK",

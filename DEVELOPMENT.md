@@ -1,17 +1,20 @@
 
-### Project Structure within s3-lambda-translate-cdk-python:
+### Project Structure within eventbridge-lambda-comprehend-custom-cdk-python:
 ```
-s3-lambda-translate-cdk-python
+eventbridge-lambda-comprehend-custom-cdk-python
 - app.py
 - cdk.json
 - src/
    - lambda_function.py
    - architecture.png
+   - Screenshot_1.png
+   - Screenshot_2.png
+   - Screenshot_3.png
+   - Screenshot_4.png
+   - Screenshot_5.png
+   - Screenshot_6.png
+   - Screenshot_7.png
 - requirements.txt
-- assets/
-    - AmazonSimpleStorageService.html
-    - fr-AmazonSimpleStorageService.html
-- python.zip
 ```
 
 ## Common Errors & Troubleshooting
