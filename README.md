@@ -104,7 +104,7 @@ Upon reaching schedule UTC time, the Lambda function is triggered and go to `Com
 Once the status changes to `Active`, the endpoint can be used to perform analysis.
 ![Diagram](src/Screenshot_4.png)
 
-From the stack output section, retrieve the DynamoDB table name and for the `CustomModelType`, `CustomEndpointName` combination entered in the `create_schedule` stack section of app.py, an entry would be present which shows the ARN of the endpoint.
+From the stack output section, retrieve the DynamoDB table name and for the `CustomModelType`, `CustomEndpointName` combination entered in the payload for `CreateSchedule` target section, an entry would be present which shows the ARN of the newly created endpoint.
 ![Diagram](src/Screenshot_5.png)
 
 Based on the time schedule setup for `DeleteSchedule`, the Lambda function is triggered and the `Comprehend` console shows that the endpoint is getting deleted.
