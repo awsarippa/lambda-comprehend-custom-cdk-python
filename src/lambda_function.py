@@ -17,7 +17,7 @@ def lambda_handler(event, context):
     """
     :param event: Input from the EventBridge on the basis of schedule
     :param context: Any methods and properties that provide information about the invocation, function, and execution environment
-    :return: THe response from Comprehend service about the creation of endpoint for custom model
+    :return: THe response from Comprehend service about the creation and deletion of endpoint for custom model
     """
     try:
         LOG.info(f"Event is {event}")
@@ -29,6 +29,7 @@ def lambda_handler(event, context):
         # Invoke Comprehend Create Endpoint API
         if event['eventType'] == 'CreateEndpoint':
             LOG.info(f'Scheduled action: CreateEndpoint')
+
             response = comprehend_obj.create_endpoint(
                 EndpointName=event["customEndpoint"],
                 ModelArn=event["customModelArn"],
@@ -43,14 +44,17 @@ def lambda_handler(event, context):
         
         elif event['eventType'] == 'DeleteEndpoint':
             LOG.info(f'Scheduled action: DeleteEndpoint')
+
             # Get the EndpointARN from DynamoDB by passing the CustomModelType and CustomEndpointName as Partition Key and Sort Key respectively
             EndpointQueryResp = dynamodb_obj.query(KeyConditionExpression=Key("CustomModelType").eq(event["modelType"]) & Key("CustomEndpointName").eq(event["customEndpoint"]))
             EndpointARN = EndpointQueryResp["Items"][0]["EndpointARN"]
             LOG.info(f'DeleteEndpoint method EndpointARN: {EndpointQueryResp}')
+
             response = comprehend_obj.delete_endpoint(
                 EndpointArn=EndpointARN
             )
             LOG.info(f"Response from Comprehend Delete Endpoint API: {response}")
+            
             dynamodb_obj.delete_item(Key={"CustomModelType": event["modelType"], "CustomEndpointName": event["customEndpoint"]})
             LOG.info(f'Endpoint has been deleted with ARN: {EndpointARN} and record has been deleted from DynamoDB table')
             returnMsg = {"statusCode": http.HTTPStatus.OK, "endpointARN": EndpointARN, "action": event['eventType']}

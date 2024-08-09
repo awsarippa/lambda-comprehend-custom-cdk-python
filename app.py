@@ -24,7 +24,7 @@ from constructs import Construct
 DIRNAME = os.path.dirname(__file__)
 
 
-class S3LambdaComprehendCustomServerless(Stack):
+class EventBridgeLambdaComprehendCustomServerless(Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
@@ -51,7 +51,7 @@ class S3LambdaComprehendCustomServerless(Stack):
             iam.ManagedPolicy.from_aws_managed_policy_name("AWSLambdaExecute")
         )
 
-        # lambda function for processing the incoming request from S3 bucket
+        # Lambda function for processing the incoming request from EventBridge Scheduler
         lambda_function = lambda_.Function(
             self,
             "ComprehendCustomEndpoint",
@@ -89,8 +89,8 @@ class S3LambdaComprehendCustomServerless(Stack):
             "schedule-group",
             name="schedule-group",
         )
-        # Create a schedule to invoke a lambda function from EventBridge
-        # scheduler
+
+        # Create a schedule to invoke a lambda function from EventBridge scheduler, for endpoint creation
         create_schedule = scheduler.CfnSchedule(
             self,
             "CreateSchedule",
@@ -114,6 +114,7 @@ class S3LambdaComprehendCustomServerless(Stack):
             ),
         )
 
+        # Create a schedule to invoke a lambda function from EventBridge scheduler, for endpoint deletion
         delete_schedule = scheduler.CfnSchedule(
             self,
             "DeleteSchedule",
@@ -139,12 +140,12 @@ class S3LambdaComprehendCustomServerless(Stack):
         # Outputs
         CfnOutput(
             self,
-            "Lambda",
-            description="Lambda",
-            value=lambda_function.function_arn,
+            "DynamoDB",
+            description="DynamoDB",
+            value=dynamodb_table.table_name,
         )
 
 
 app = cdk.App()
-filestack = S3LambdaComprehendCustomServerless(app, "S3LambdaComprehendServerless")
+filestack = EventBridgeLambdaComprehendCustomServerless(app, "EventBridgeLambdaComprehendCustomServerless")
 app.synth()
