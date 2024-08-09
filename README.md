@@ -98,7 +98,7 @@ And modify the `payload` in `Target` section to add the ARN of the custom model.
 
 Repeat the activity for `DeleteSchedule` to update the `modelType` and `customEndpoint` values in the Target section along with cron expression in `Schedule` section.
 
-Upon reaching schedule UTC time, the Lambda function is triggered and go to `Comprehend` console to check the endpoint creation. 
+At the scheduled UTC time, the Lambda function is triggered. Go to `Comprehend` console to check the endpoint creation. 
 ![Diagram](src/Screenshot_3.png)
 
 Once the status changes to `Active`, the endpoint can be used to perform analysis.
