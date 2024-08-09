@@ -107,7 +107,7 @@ class S3LambdaComprehendCustomServerless(Stack):
                         'eventType': 'CreateEndpoint', #DO NOT MODIFY THIS FIELD
                         'modelType': 'CustomClassifier',
                         'customEndpoint': 'CustomClassifierEndpoint',
-                        'customModelArn': 'arn:aws:comprehend:us-east-1:007288715080:document-classifier/Sample-Doc-Classifier-IDP/version/Sample-Doc-Classifier-IDP-v1',
+                        'customModelArn': 'arn:aws:comprehend:<region_name>:<aws account number>:<document-classifier or entity-recognizer>/<custom model name>/version/<version name>',
                         'dynamoDBTable': dynamodb_table.table_name
                     }
                 ),
