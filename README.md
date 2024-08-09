@@ -96,7 +96,7 @@ Click on record for `CreateSchedule`. Edit the record to modify the cron express
 And modify the `payload` in `Target` section to add the ARN of the custom model. The `customModelArn` can be retrieved from `Comprehend` -> `Custom classification` or `Custom entity recognition` -> `Model name` -> relevant `version` -> `ARN`, the `modelType` is to  uniquely identify Custom classification or entity recognition model, `customEndpoint` to uniquely identify the endpoint).
 ![Diagram](src/Screenshot_7.png)
 
-Repeat the activity for `DeleteSchedule` record.
+Repeat the activity for `DeleteSchedule` to update the `modelType` and `customEndpoint` values in the Target section along with cron expression in `Schedule` section.
 
 Upon reaching schedule UTC time, the Lambda function is triggered and go to `Comprehend` console to check the endpoint creation. 
 ![Diagram](src/Screenshot_3.png)
